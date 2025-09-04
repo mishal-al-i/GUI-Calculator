@@ -1,0 +1,49 @@
+import tkinter as tk
+
+def on_click(event):
+    btn_text = event.widget["text"]
+
+    if btn_text == "=":
+        try:
+            result = eval(entry.get())
+            entry.delete(0, tk.END)
+            entry.insert(tk.END, str(result))
+        except:
+            entry.delete(0, tk.END)
+            entry.insert(tk.END, "Error")
+    elif btn_text == "C":
+        entry.delete(0, tk.END)
+    else:
+        entry.insert(tk.END, btn_text)
+
+# Create main window
+window = tk.Tk()
+window.title("GUI Calculator")
+window.geometry("350x500")
+window.resizable(False, False)
+
+# Entry box
+entry = tk.Entry(window, font="Arial 24", borderwidth=5, relief=tk.RIDGE, justify="right")
+entry.pack(fill=tk.BOTH, ipadx=8, ipady=15, pady=10, padx=10)
+
+# Button layout
+button_texts = [
+    ['C', '%', '/', '*'],
+    ['7', '8', '9', '-'],
+    ['4', '5', '6', '+'],
+    ['1', '2', '3', '='],
+    ['0', '.', '(', ')']
+]
+
+# Create buttons
+for row in button_texts:
+    frame = tk.Frame(window)
+    frame.pack(expand=True, fill="both", padx=10, pady=2)
+    for btn_text in row:
+        btn = tk.Button(frame, text=btn_text, font="Arial 20", relief=tk.GROOVE, borderwidth=2)
+        btn.pack(side="left", expand=True, fill="both", padx=2, pady=2)
+        btn.bind("<Button-1>", on_click)
+
+# Start GUI loop
+window.mainloop()
+
